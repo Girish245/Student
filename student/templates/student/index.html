@@ -1,0 +1,58 @@
+{% extends 'main.html' %}
+{% block content %}
+
+
+<h1>Index Page</h1>
+
+
+<a href="{% url 'add-student' %}">Add Student</a>
+<hr>
+
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Email</th>
+        <th>Gender</th>
+        <th></th>
+    </tr>
+
+    {% for std in page_obj %}
+    <tr>
+        
+        <td>{{std.name}}</td>
+        <td>{{std.age}}</td>
+        <td>{{std.email}}</td>
+        <td>{{std.gender}}</td>
+        <td><a href="{% url 'delete-student' std.id %}">Delete</a></td>
+        
+    </tr>
+    {% endfor %}
+</table>
+
+<hr>
+
+<div class="paginator">
+    <span>
+        {% if page_obj.has_previous %}
+            <a href="?page=1">first</a>
+            <a href="?page={{page_obj.previous_page_number}}">Previous</a>
+
+        {% endif %}
+        <span class="current">
+            page {{page_obj.number}}
+        </span>
+
+        {% if page_obj.has_next %}
+
+            <a href="?page={{page_obj.next_page_number}}">next</a>
+            <a href="?page={{page_obj.paginator.num_pages}}">Last</a>
+
+        {% endif %}
+    </span>
+
+
+</div>
+
+{% endblock %}
